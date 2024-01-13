@@ -17,7 +17,7 @@ async function storeNFTs(imagesPath) {
         const response = await nftstorage.store({
             image,
             name: locationName,
-            description: `${locationName}`,
+            description: `A picture of ${locationName}`,
         })
         responses.push(response)
     }
