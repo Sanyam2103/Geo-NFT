@@ -1,10 +1,10 @@
-//SPDX-License-Identifier: MIT
+//SPDX-License-Identifier: MIT 
 
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-error TreasureHuntNft__WrongAnswer();
+error TreasureHuntNft__WrongLocation();
 
 contract TreasureHuntNft is ERC721URIStorage {
     // We store the address to the correct answers in an enum
@@ -14,7 +14,7 @@ contract TreasureHuntNft is ERC721URIStorage {
     uint256 public s_tokenCounter;
     string[] internal s_locationTokenUris;
     enum location {
-        // Considering Sector17, Elante and Sukhna lake locations in chandigarh for this project
+    // Considering Sector17, Elante and Sukhna lake locations in chandigarh for this project
         Sector17,
         Elante,
         SukhnaLake
@@ -32,7 +32,7 @@ contract TreasureHuntNft is ERC721URIStorage {
     // mintNft takes 2 parameters, index of the riddle and pincode of the current location of the user
     function mintNft(uint256 index, uint256 pincode) public {
         if (location(index) != pincodeToLocation[pincode]) {
-            revert TreasureHuntNft__WrongAnswer();
+            revert TreasureHuntNft__WrongLocation();
         }
         location newLocation = pincodeToLocation[pincode];
         address owner = msg.sender;
