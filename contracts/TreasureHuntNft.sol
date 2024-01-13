@@ -2,11 +2,9 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-event NftMinted(location userLocation,address minter);
-
-contract TreasureHuntNft is ERC721{
+contract TreasureHuntNft is ERC721URIStorage{
     // We store the address to the correct answers in an enum
     // We store the coordinates of the correct answers in a mapping 
     // We check the current location with the coordinates of the correct address
@@ -19,8 +17,12 @@ contract TreasureHuntNft is ERC721{
         location3
     }
 
-    constructor() ERC721("Treasure Hunt NFT", "THT") {
+    event NftMinted(location newLocation,address minter);
+
+
+    constructor(string[3] memory locationTokenUris) ERC721("Treasure Hunt NFT", "THT") {
         s_tokenCounter = 0;
+        s_locationTokenUris = locationTokenUris;
     }
     
     mapping (uint256 => location) public pincodeToLocation;
@@ -31,7 +33,7 @@ contract TreasureHuntNft is ERC721{
         uint256 newtokenId = s_tokenCounter;
         s_tokenCounter = s_tokenCounter + 1 ;
         _safeMint(owner,newtokenId);
-        _setTokenURI(newtokenId, s_locationtokenUris[newLocation])
+        _setTokenURI(newtokenId, s_locationTokenUris[uint256(newLocation)]);
         emit NftMinted(newLocation,owner);
     }   
 
